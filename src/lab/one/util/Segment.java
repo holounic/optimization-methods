@@ -3,8 +3,6 @@ package lab.one.util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.DoubleBinaryOperator;
-import java.util.function.DoubleFunction;
-import java.util.function.Function;
 
 public class Segment {
     private final double from;

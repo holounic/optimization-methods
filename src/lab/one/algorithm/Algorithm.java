@@ -1,7 +1,6 @@
 package lab.one.algorithm;
 
 import lab.one.util.Segment;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.DoubleFunction;
@@ -18,9 +17,9 @@ public abstract class Algorithm {
 
     public double apply(Segment segment) {
         Segment currentSegment = segment;
-        while (!done(segment)) {
+        while (!done(currentSegment)) {
             currentSegment = step(currentSegment);
-            segments.add(segment);
+            segments.add(currentSegment);
             ++numUpdates;
         }
         return getMinX(currentSegment);
