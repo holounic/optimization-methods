@@ -34,4 +34,9 @@ public class Dichotomy extends Algorithm {
     protected double getMinX(Segment segment) {
         return (segment.from() + segment.to()) / 2;
     }
+
+    @Override
+    protected void init(Segment segment) {
+        return;
+    }
 }

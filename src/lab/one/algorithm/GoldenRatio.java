@@ -1,7 +1,6 @@
 package lab.one.algorithm;
 
 import lab.one.util.Segment;
-
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleFunction;
 
@@ -15,18 +14,12 @@ public class GoldenRatio extends Algorithm {
     }
 
     private double x1, x2;
-    private boolean computedXs = false;
     private static final DoubleBinaryOperator xForm = (x, y) -> y - THETA * (y - x);
 
     @Override
     protected Segment step(Segment segment) {
-        if (!computedXs) {
-            x1 = segment.computeX((x, y) -> (y - x) * (3 - SQRT_FIVE) / 2);
-            x2 = segment.computeX((x, y) -> (y - x) * THETA);
-            computedXs = true;
-        }
-        double f1 = this.func.apply(x1);
-        double f2 = this.func.apply(x2);
+        double f1 = func.apply(x1);
+        double f2 = func.apply(x2);
 
         if (f1 <= f2) {
             double updatedFrom = segment.from();
@@ -55,5 +48,11 @@ public class GoldenRatio extends Algorithm {
     @Override
     protected double getMinX(Segment segment) {
         return (segment.from() + segment.from()) / 2;
+    }
+
+    @Override
+    protected void init(Segment segment) {
+        x1 = segment.computeX((x, y) -> (y - x) * (3 - SQRT_FIVE) / 2);
+        x2 = segment.computeX((x, y) -> (y - x) * THETA);
     }
 }
