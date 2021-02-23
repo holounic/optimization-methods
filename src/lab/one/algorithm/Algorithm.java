@@ -20,8 +20,9 @@ public abstract class Algorithm {
         Segment currentSegment = segment;
         init(segment);
         while (!done(currentSegment)) {
-            currentSegment = step(currentSegment);
+            Segment newSegment = step(currentSegment);
             segments.add(currentSegment);
+            currentSegment = newSegment;
             ++numUpdates;
         }
         return getMinX(currentSegment);

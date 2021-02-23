@@ -36,7 +36,5 @@ public class Dichotomy extends Algorithm {
     }
 
     @Override
-    protected void init(Segment segment) {
-        return;
-    }
+    protected void init(Segment segment) { }
 }
