@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.function.DoubleFunction;
 
 public abstract class Algorithm {
+
+    protected static final double PRECISENESS = 0.001;
     protected int numUpdates;
     protected final double eps;
     protected final List<Segment> segments;
@@ -36,7 +38,8 @@ public abstract class Algorithm {
     }
 
     public String getStats() {
-        return String.format("==============\nNum updates:%d\nSegments:\n%s", numUpdates, segments.toString());
+        return String.format("Num updates:%d\nSegments:\n%s\n==============",
+                numUpdates, segments.toString());
     }
 
 }

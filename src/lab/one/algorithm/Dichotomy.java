@@ -5,14 +5,16 @@ import java.util.function.DoubleFunction;
 
 public class Dichotomy extends Algorithm {
     private final double delta;
+    private static final double DEFAULT_DELTA = 0.001;
 
     public Dichotomy(DoubleFunction<Double> func, double eps, double delta) {
         super(func, eps);
         this.delta = delta;
     }
 
+
     public Dichotomy(DoubleFunction<Double> func) {
-        this(func, 0.001, 0.001);
+        this(func, PRECISENESS, DEFAULT_DELTA);
     }
 
     @Override

@@ -11,6 +11,8 @@ public class Fibonacci extends Algorithm {
     private static final double FIRST_FIB_SUM = (1 + SQRT_FIVE) / 2;
     private static final double SECOND_FIB_SUM = (1 - SQRT_FIVE) / 2;
 
+    private static final long NUM_UPDATES = 10;
+
     private final long n;
     private static final LongToDoubleFunction nthFib =
             x -> (Math.pow(FIRST_FIB_SUM, x) - Math.pow(SECOND_FIB_SUM, x)) / SQRT_FIVE;
@@ -25,7 +27,7 @@ public class Fibonacci extends Algorithm {
     }
 
     public Fibonacci(DoubleFunction<Double> func) {
-        this(func, 0.001, 1000);
+        this(func, PRECISENESS, NUM_UPDATES);
     }
 
     private double x1, x2;

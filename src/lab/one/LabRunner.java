@@ -17,11 +17,12 @@ public class LabRunner {
     private static final double TO = 0.5;
 
     public static void main(String[] args) {
-        List<Algorithm> algorithms = List.of(new Dichotomy(FUNC), new GoldenRatio(FUNC), new Fibonacci(FUNC));
+        List<Algorithm> algorithms = List.of(new Dichotomy(FUNC), new Fibonacci(FUNC), new GoldenRatio(FUNC));
 
         for (Algorithm algorithm : algorithms) {
-            algorithm.apply(new Segment(FROM, TO));
             System.out.println(algorithm.getClass().getName());
+            double answer = algorithm.apply(new Segment(FROM, TO));
+            System.out.println("Answer: " + answer);
             System.out.println(algorithm.getStats());
         }
     }

@@ -14,7 +14,7 @@ public class GoldenRatio extends Algorithm {
     }
 
     public GoldenRatio(DoubleFunction<Double> func) {
-        this(func, 0.001);
+        this(func, PRECISENESS);
     }
 
     private double x1, x2;
