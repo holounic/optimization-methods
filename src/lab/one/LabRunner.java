@@ -1,5 +1,11 @@
 package lab.one;
 
+import lab.one.algorithm.Algorithm;
+import lab.one.algorithm.Dichotomy;
+import lab.one.algorithm.Fibonacci;
+import lab.one.algorithm.GoldenRatio;
+import lab.one.util.Segment;
+import java.util.List;
 import java.util.function.DoubleFunction;
 
 public class LabRunner {
@@ -11,6 +17,12 @@ public class LabRunner {
     private static final double TO = 0.5;
 
     public static void main(String[] args) {
+        List<Algorithm> algorithms = List.of(new Dichotomy(FUNC), new GoldenRatio(FUNC), new Fibonacci(FUNC));
 
+        for (Algorithm algorithm : algorithms) {
+            algorithm.apply(new Segment(FROM, TO));
+            System.out.println(algorithm.getClass().getName());
+            System.out.println(algorithm.getStats());
+        }
     }
 }

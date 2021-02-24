@@ -38,6 +38,6 @@ public class Segment {
 
     @Override
     public String toString() {
-        return String.format("{segment: [%d, %d], computed: %s}", from, to, computedXs.toString());
+        return String.format("{segment: [%f, %f], computed: %s}", from, to, computedXs.toString());
     }
 }

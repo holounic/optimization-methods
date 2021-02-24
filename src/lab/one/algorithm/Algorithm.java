@@ -36,7 +36,7 @@ public abstract class Algorithm {
     }
 
     public String getStats() {
-        return String.format("==============\nNum updates:%s\nSegments:\n%s", numUpdates, segments.toString());
+        return String.format("==============\nNum updates:%d\nSegments:\n%s", numUpdates, segments.toString());
     }
 
 }

@@ -11,6 +11,10 @@ public class Dichotomy extends Algorithm {
         this.delta = delta;
     }
 
+    public Dichotomy(DoubleFunction<Double> func) {
+        this(func, 0.001, 0.001);
+    }
+
     @Override
     protected Segment step(Segment segment) {
         double x1 = segment.computeX((x, y) -> (x + y - this.delta) / 2);

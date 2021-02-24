@@ -13,6 +13,10 @@ public class GoldenRatio extends Algorithm {
         super(func, eps);
     }
 
+    public GoldenRatio(DoubleFunction<Double> func) {
+        this(func, 0.001);
+    }
+
     private double x1, x2;
     private static final DoubleBinaryOperator xForm = (x, y) -> y - THETA * (y - x);
 

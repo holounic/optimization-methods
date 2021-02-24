@@ -4,6 +4,7 @@ import lab.one.util.Segment;
 import java.util.function.DoubleFunction;
 import java.util.function.LongToDoubleFunction;
 
+// TODO: check
 public class Fibonacci extends Algorithm {
 
     private static final double SQRT_FIVE = Math.sqrt(5);
@@ -21,6 +22,10 @@ public class Fibonacci extends Algorithm {
     public Fibonacci(DoubleFunction<Double> func, double eps, long n) {
         super(func, eps);
         this.n = n;
+    }
+
+    public Fibonacci(DoubleFunction<Double> func) {
+        this(func, 0.001, 1000);
     }
 
     private double x1, x2;
