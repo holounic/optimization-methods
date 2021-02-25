@@ -5,22 +5,21 @@ import java.util.function.DoubleFunction;
 
 public class Dichotomy extends Algorithm {
     private final double delta;
-    private static final double DEFAULT_DELTA = 0.001;
 
-    public Dichotomy(DoubleFunction<Double> func, double eps, double delta) {
+    public Dichotomy(DoubleFunction<Double> func, double eps) {
         super(func, eps);
-        this.delta = delta;
+        this.delta = eps / 4;
     }
 
 
     public Dichotomy(DoubleFunction<Double> func) {
-        this(func, PRECISENESS, DEFAULT_DELTA);
+        this(func, PRECISENESS);
     }
 
     @Override
     protected Segment step(Segment segment) {
         double x1 = segment.computeX((x, y) -> (x + y - this.delta) / 2);
-        double x2 = segment.computeX((x, y) -> (x + y - this.delta) / 2);
+        double x2 = segment.computeX((x, y) -> (x + y + this.delta) / 2);
 
         double f1 = func.apply(x1);
         double f2 = func.apply(x2);
