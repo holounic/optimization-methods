@@ -8,7 +8,8 @@ import java.util.function.DoubleFunction;
 import java.util.stream.Collectors;
 
 public class TableBuilder {
-    public void algoTableBuilder(PrintStream out, Algorithm performedAlgo, DoubleFunction<Double> func) {
+
+    public void algoTable(PrintStream out, Algorithm performedAlgo, DoubleFunction<Double> func) {
         List<Segment> segments = performedAlgo.getSegments();
         // & segment & length & x & f(x)
         for (Segment segment : segments) {
@@ -19,5 +20,14 @@ public class TableBuilder {
             out.println(String.format("& [%f, %f] & %f & %s & %s \\\\",
                     segment.from(), segment.to(), segment.length(), xs, fs));
         }
+    }
+
+    public void epsNumItersTable(PrintStream out, List<Integer> numUpdates, List<Double> eps) {
+        // (log(eps), numUpdates), (*, *), ...
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < numUpdates.size(); ++i) {
+            builder.append(String.format("(%f,%d)", eps.get(i), numUpdates.get(i)));
+        }
+        out.println(builder);
     }
 }
