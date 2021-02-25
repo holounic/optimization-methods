@@ -23,17 +23,19 @@ public class GoldenRatio extends Algorithm {
 
     @Override
     protected Segment step(Segment segment) {
-
+        Segment updatedSegment;
 
         if (f1 <= f2) {
             double updatedFrom = segment.from();
             double updatedTo = x2;
+            updatedSegment = new Segment(updatedFrom, updatedTo);
 
             x2 = x1;
             f2 = f1;
-            x1 = segment.computeX(x1Form);
+            x1 = updatedSegment.computeX(x1Form);
             f1 = func.apply(x1);
-            return new Segment(updatedFrom, updatedTo);
+
+            return updatedSegment;
         }
 
         double updatedFrom = x1;
@@ -41,9 +43,10 @@ public class GoldenRatio extends Algorithm {
 
         x1 = x2;
         f1 = f2;
-        x2 = segment.computeX(x2Form);
+        updatedSegment = new Segment(updatedFrom, updatedTo);
+        x2 = updatedSegment.computeX(x2Form);
         f2 = func.apply(x2);
-        return new Segment(updatedFrom, updatedTo);
+        return updatedSegment;
 
     }
 
