@@ -37,24 +37,27 @@ public class Fibonacci extends Algorithm {
         double f1 = func.apply(x1);
         double f2 = func.apply(x2);
 
+        Segment updatedSegment;
+
         if (f1 <= f2) {
             double updatedFrom = segment.from();
             double updatedTo = x2;
+            x2 = x1;
+            updatedSegment = new Segment(updatedFrom, updatedTo);
+            x1 = updatedSegment.computeX((x, y) -> x + nthDivNp2Fib.applyAsDouble(n - numUpdates + 1) * (y - x));
+        } else {
+            double updatedFrom = x1;
+            double updatedTo = segment.to();
             x1 = x2;
-            x2 = segment.computeX((x, y) -> x + np1DivNp2Fib.applyAsDouble(n - numUpdates + 1) * (y - x));
-            return new Segment(updatedFrom, updatedTo);
+            updatedSegment = new Segment(updatedFrom, updatedTo);
+            x2 = updatedSegment.computeX((x, y) -> x + np1DivNp2Fib.applyAsDouble(n - numUpdates + 1) * (y - x));
         }
-
-        double updatedFrom = x1;
-        double updatedTo = segment.to();
-        x2 = x1;
-        x1 = segment.computeX((x, y) -> x + nthDivNp2Fib.applyAsDouble(n - numUpdates + 1) * (y - x));
-        return new Segment(updatedFrom, updatedTo);
+        return updatedSegment;
     }
 
     @Override
     protected boolean done(Segment segment) {
-        return numUpdates == n;
+        return numUpdates == n - 2;
     }
 
     @Override
@@ -64,8 +67,8 @@ public class Fibonacci extends Algorithm {
 
     @Override
     protected void init(Segment segment) {
-        x1 = segment.from()
-                + (nthDivNp2Fib.applyAsDouble(n)) * (segment.to() - segment.to());
-        x2 = segment.from() + segment.to() - x1;
+        x1 = segment.computeX((x, y) -> x + nthDivNp2Fib.applyAsDouble(n) * (y - x));
+        x2 = segment.computeX((x, y) -> x + y - x1);
+
     }
 }
