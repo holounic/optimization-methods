@@ -5,6 +5,9 @@ import lab.one.algorithm.Dichotomy;
 import lab.one.algorithm.Fibonacci;
 import lab.one.algorithm.GoldenRatio;
 import lab.one.util.Segment;
+import latex.TableBuilder;
+
+import java.io.PrintStream;
 import java.util.List;
 import java.util.function.DoubleFunction;
 
@@ -16,14 +19,21 @@ public class LabRunner {
     private static final double FROM = -0.5;
     private static final double TO = 0.5;
 
+    private static void printAlgoStats(PrintStream out, Algorithm performedAlgo, double answer) {
+        out.println(performedAlgo.getClass().getName());
+        out.println("min x = " + answer);
+        out.println("F(x) = " + FUNC.apply(answer));
+        out.println("Num updates " + performedAlgo.getNumUpdates());
+        new TableBuilder().algoTableBuilder(out, performedAlgo, FUNC);
+        out.println("==========================");
+    }
+    private static final double eps = 0.00001;
     public static void main(String[] args) {
-        List<Algorithm> algorithms = List.of(new Dichotomy(FUNC), new Fibonacci(FUNC), new GoldenRatio(FUNC));
+        List<Algorithm> algorithms = List.of(new Dichotomy(FUNC, eps), new GoldenRatio(FUNC, eps), new Fibonacci(FUNC, 8));
 
         for (Algorithm algorithm : algorithms) {
-            System.out.println(algorithm.getClass().getName());
             double answer = algorithm.apply(new Segment(FROM, TO));
-            System.out.println("Answer: " + answer);
-            System.out.println(algorithm.getStats());
+            printAlgoStats(System.out, algorithm, answer);
         }
     }
 }

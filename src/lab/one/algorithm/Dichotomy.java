@@ -23,6 +23,8 @@ public class Dichotomy extends Algorithm {
 
         double f1 = func.apply(x1);
         double f2 = func.apply(x2);
+        segment.computedF(x1);
+        segment.computedF(x2);
 
         if (f1 <= f2) {
             return new Segment(segment.from(), x2);

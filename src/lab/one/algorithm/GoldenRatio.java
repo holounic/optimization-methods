@@ -34,7 +34,7 @@ public class GoldenRatio extends Algorithm {
             f2 = f1;
             x1 = updatedSegment.computeX(x1Form);
             f1 = func.apply(x1);
-
+            segment.computedF(f1);
             return updatedSegment;
         }
 
@@ -46,6 +46,7 @@ public class GoldenRatio extends Algorithm {
         updatedSegment = new Segment(updatedFrom, updatedTo);
         x2 = updatedSegment.computeX(x2Form);
         f2 = func.apply(x2);
+        segment.computedF(f2);
         return updatedSegment;
 
     }

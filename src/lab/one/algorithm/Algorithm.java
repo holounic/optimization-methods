@@ -37,8 +37,20 @@ public abstract class Algorithm {
         segments = new ArrayList<>();
     }
 
+    public Algorithm(DoubleFunction<Double> func) {
+        this(func, PRECISENESS);
+    }
+
     public String getStats() {
         return String.format("Num updates:%d\nSegments:\n%s", numUpdates, segments.toString());
+    }
+
+    public List<Segment> getSegments() {
+        return segments;
+    }
+
+    public int getNumUpdates() {
+        return numUpdates;
     }
 
 }

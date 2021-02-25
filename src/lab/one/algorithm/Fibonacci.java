@@ -4,7 +4,6 @@ import lab.one.util.Segment;
 import java.util.function.DoubleFunction;
 import java.util.function.LongToDoubleFunction;
 
-// TODO: check
 public class Fibonacci extends Algorithm {
 
     private static final double SQRT_FIVE = Math.sqrt(5);
@@ -21,13 +20,13 @@ public class Fibonacci extends Algorithm {
     private static final LongToDoubleFunction np1DivNp2Fib =
             x -> nthFib.applyAsDouble(x + 1) / nthFib.applyAsDouble(x + 2);
 
-    public Fibonacci(DoubleFunction<Double> func, double eps, long n) {
-        super(func, eps);
+    public Fibonacci(DoubleFunction<Double> func, long n) {
+        super(func);
         this.n = n;
     }
 
     public Fibonacci(DoubleFunction<Double> func) {
-        this(func, PRECISENESS, NUM_UPDATES);
+        this(func, NUM_UPDATES);
     }
 
     private double x1, x2, f1, f2;
@@ -44,6 +43,7 @@ public class Fibonacci extends Algorithm {
             updatedSegment = new Segment(updatedFrom, updatedTo);
             x1 = updatedSegment.computeX((x, y) -> x + nthDivNp2Fib.applyAsDouble(n - numUpdates + 1) * (y - x));
             f1 = func.apply(x1);
+            segment.computedF(f1);
         } else {
             double updatedFrom = x1;
             double updatedTo = segment.to();
@@ -52,6 +52,7 @@ public class Fibonacci extends Algorithm {
             updatedSegment = new Segment(updatedFrom, updatedTo);
             x2 = updatedSegment.computeX((x, y) -> x + np1DivNp2Fib.applyAsDouble(n - numUpdates + 1) * (y - x));
             f2 = func.apply(x2);
+            segment.computedF(f2);
         }
         return updatedSegment;
     }

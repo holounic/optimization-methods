@@ -7,7 +7,7 @@ import java.util.function.DoubleBinaryOperator;
 public class Segment {
     private final double from;
     private final double to;
-    private List<Double> computedXs;
+    private List<Double> computedXs, computedFs;
 
     public Segment(double from, double to) {
         if (from > to) {
@@ -17,6 +17,7 @@ public class Segment {
         this.from = from;
         this.to = to;
         this.computedXs = new ArrayList<>();
+        this.computedFs = new ArrayList<>();
     }
 
     public double from() {
@@ -33,8 +34,20 @@ public class Segment {
         return x;
     }
 
+    public void computedF(double f) {
+        computedFs.add(f);
+    }
+
     public double length() {
         return to - from;
+    }
+
+    public List<Double> getComputedXs() {
+        return computedXs;
+    }
+
+    public List<Double> getComputedFs() {
+        return computedFs;
     }
 
     @Override
