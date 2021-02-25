@@ -11,7 +11,8 @@ public class Segment {
 
     public Segment(double from, double to) {
         if (from > to) {
-            throw new IllegalArgumentException("segment length must be positive");
+            throw new IllegalArgumentException(
+                    String.format("Attempted to create segment of negative length: %f, %f", from, to));
         }
         this.from = from;
         this.to = to;
@@ -38,6 +39,6 @@ public class Segment {
 
     @Override
     public String toString() {
-        return String.format("{segment: [%f, %f], computed: %s}", from, to, computedXs.toString());
+        return String.format("{segment: [%f, %f], computed: %s}\n", from, to, computedXs.toString());
     }
 }

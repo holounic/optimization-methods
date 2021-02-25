@@ -7,7 +7,7 @@ import java.util.function.DoubleFunction;
 public class GoldenRatio extends Algorithm {
 
     private static final double SQRT_FIVE = Math.sqrt(5);
-    private static final double THETA = (SQRT_FIVE - 1) / 2;
+    private static final double K = (3 - SQRT_FIVE) / 2;
 
     public GoldenRatio(DoubleFunction<Double> func, double eps) {
         super(func, eps);
@@ -18,7 +18,8 @@ public class GoldenRatio extends Algorithm {
     }
 
     private double x1, x2;
-    private static final DoubleBinaryOperator xForm = (x, y) -> y - THETA * (y - x);
+    private static final DoubleBinaryOperator x1Form = (x, y) -> x + K * (y - x);
+    private static final DoubleBinaryOperator x2Form = (x, y) -> y - K * (y - x);
 
     @Override
     protected Segment step(Segment segment) {
@@ -30,23 +31,22 @@ public class GoldenRatio extends Algorithm {
             double updatedTo = x2;
 
             x2 = x1;
-            x1 = segment.computeX(xForm);
-            new Segment(updatedFrom, updatedTo);
+            x1 = segment.computeX(x1Form);
+            return new Segment(updatedFrom, updatedTo);
         }
 
         double updatedFrom = x1;
         double updatedTo = segment.to();
 
         x1 = x2;
-        x2 = segment.computeX(xForm);
-
+        x2 = segment.computeX(x2Form);
         return new Segment(updatedFrom, updatedTo);
 
     }
 
     @Override
     protected boolean done(Segment segment) {
-        return THETA * segment.length() <= this.eps;
+        return segment.length() <= this.eps;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class GoldenRatio extends Algorithm {
 
     @Override
     protected void init(Segment segment) {
-        x1 = segment.computeX((x, y) -> (y - x) * (3 - SQRT_FIVE) / 2);
-        x2 = segment.computeX((x, y) -> (y - x) * THETA);
+        x1 = segment.computeX(x1Form);
+        x2 = segment.computeX(x2Form);
     }
 }
