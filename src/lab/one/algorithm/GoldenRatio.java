@@ -17,21 +17,22 @@ public class GoldenRatio extends Algorithm {
         this(func, PRECISENESS);
     }
 
-    private double x1, x2;
+    private double x1, x2, f1, f2;
     private static final DoubleBinaryOperator x1Form = (x, y) -> x + K * (y - x);
     private static final DoubleBinaryOperator x2Form = (x, y) -> y - K * (y - x);
 
     @Override
     protected Segment step(Segment segment) {
-        double f1 = func.apply(x1);
-        double f2 = func.apply(x2);
+
 
         if (f1 <= f2) {
             double updatedFrom = segment.from();
             double updatedTo = x2;
 
             x2 = x1;
+            f2 = f1;
             x1 = segment.computeX(x1Form);
+            f1 = func.apply(x1);
             return new Segment(updatedFrom, updatedTo);
         }
 
@@ -39,7 +40,9 @@ public class GoldenRatio extends Algorithm {
         double updatedTo = segment.to();
 
         x1 = x2;
+        f1 = f2;
         x2 = segment.computeX(x2Form);
+        f2 = func.apply(x2);
         return new Segment(updatedFrom, updatedTo);
 
     }
@@ -58,5 +61,7 @@ public class GoldenRatio extends Algorithm {
     protected void init(Segment segment) {
         x1 = segment.computeX(x1Form);
         x2 = segment.computeX(x2Form);
+        f1 = func.apply(x1);
+        f2 = func.apply(x2);
     }
 }
