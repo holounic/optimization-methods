@@ -15,8 +15,11 @@ public abstract class Algorithm {
 
     protected abstract Segment step(Segment segment);
     protected abstract boolean done(Segment segment);
-    protected abstract double getMinX(Segment segment);
     protected abstract void init(Segment segment);
+
+    protected double getMinX(Segment segment) {
+        return (segment.from() + segment.to()) / 2;
+    }
 
     public double apply(Segment segment) {
         Segment currentSegment = segment;

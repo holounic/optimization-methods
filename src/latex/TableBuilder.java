@@ -23,7 +23,7 @@ public class TableBuilder {
     }
 
     public void epsNumItersTable(PrintStream out, List<Integer> numUpdates, List<Double> eps) {
-        // (log(eps), numUpdates), (*, *), ...
+        // (log(eps),numUpdates)(*, *)...
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < numUpdates.size(); ++i) {
             builder.append(String.format("(%f,%d)", eps.get(i), numUpdates.get(i)));

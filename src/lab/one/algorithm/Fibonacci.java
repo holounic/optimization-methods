@@ -63,11 +63,6 @@ public class Fibonacci extends Algorithm {
     }
 
     @Override
-    protected double getMinX(Segment segment) {
-        return (segment.to() + segment.from()) / 2;
-    }
-
-    @Override
     protected void init(Segment segment) {
         x1 = segment.computeX((x, y) -> x + nthDivNp2Fib.applyAsDouble(n) * (y - x));
         x2 = segment.computeX((x, y) -> x + y - x1);
