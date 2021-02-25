@@ -30,27 +30,28 @@ public class Fibonacci extends Algorithm {
         this(func, PRECISENESS, NUM_UPDATES);
     }
 
-    private double x1, x2;
+    private double x1, x2, f1, f2;
 
     @Override
     protected Segment step(Segment segment) {
-        double f1 = func.apply(x1);
-        double f2 = func.apply(x2);
-
         Segment updatedSegment;
 
         if (f1 <= f2) {
             double updatedFrom = segment.from();
             double updatedTo = x2;
             x2 = x1;
+            f2 = f1;
             updatedSegment = new Segment(updatedFrom, updatedTo);
             x1 = updatedSegment.computeX((x, y) -> x + nthDivNp2Fib.applyAsDouble(n - numUpdates + 1) * (y - x));
+            f1 = func.apply(x1);
         } else {
             double updatedFrom = x1;
             double updatedTo = segment.to();
             x1 = x2;
+            f1 = f2;
             updatedSegment = new Segment(updatedFrom, updatedTo);
             x2 = updatedSegment.computeX((x, y) -> x + np1DivNp2Fib.applyAsDouble(n - numUpdates + 1) * (y - x));
+            f2 = func.apply(x2);
         }
         return updatedSegment;
     }
@@ -69,6 +70,7 @@ public class Fibonacci extends Algorithm {
     protected void init(Segment segment) {
         x1 = segment.computeX((x, y) -> x + nthDivNp2Fib.applyAsDouble(n) * (y - x));
         x2 = segment.computeX((x, y) -> x + y - x1);
-
+        f1 = func.apply(x1);
+        f2 = func.apply(x2);
     }
 }
