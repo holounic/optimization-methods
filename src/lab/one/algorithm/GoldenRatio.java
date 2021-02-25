@@ -46,12 +46,12 @@ public class GoldenRatio extends Algorithm {
 
     @Override
     protected boolean done(Segment segment) {
-        return segment.length() <= this.eps;
+        return K * segment.length() <= this.eps;
     }
 
     @Override
     protected double getMinX(Segment segment) {
-        return (segment.from() + segment.from()) / 2;
+        return (segment.from() + segment.to()) / 2;
     }
 
     @Override
