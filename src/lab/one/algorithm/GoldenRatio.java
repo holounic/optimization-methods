@@ -53,7 +53,7 @@ public class GoldenRatio extends Algorithm {
 
     @Override
     protected boolean done(Segment segment) {
-        return K * segment.length() <= this.eps;
+        return K * segment.length() <= eps;
     }
 
     @Override

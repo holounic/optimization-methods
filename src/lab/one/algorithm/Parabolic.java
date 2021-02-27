@@ -11,11 +11,6 @@ public class Parabolic extends Algorithm {
     }
     private double x1, x2, x3, f1, f2, f3;
 
-    private double computeParabolicMinimum() {
-        return x2 - 0.5 * (Math.pow((x2 - x1), 2)  * (f2 - f3) - Math.pow((x2 - x3), 2) * (f2 - f1)) / (
-                (x2 - x1) * (f2 - f3) - (x2 - x3) * (f2 - f1));
-    }
-
     private DoubleBinaryOperator xForm = (x, y) -> x2 - 0.5 * (Math.pow((x2 - x1), 2)
             * (f2 - f3) - Math.pow((x2 - x3), 2) * (f2 - f1)) / (
             (x2 - x1) * (f2 - f3) - (x2 - x3) * (f2 - f1));
@@ -48,11 +43,6 @@ public class Parabolic extends Algorithm {
             }
         }
         return new Segment(x1, x3);
-    }
-
-    @Override
-    protected boolean done(Segment segment) {
-        return segment.length() <= eps;
     }
 
     @Override
