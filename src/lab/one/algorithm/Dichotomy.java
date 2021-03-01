@@ -11,7 +11,6 @@ public class Dichotomy extends Algorithm {
         this.delta = eps / 4;
     }
 
-
     public Dichotomy(DoubleFunction<Double> func) {
         this(func, PRECISENESS);
     }

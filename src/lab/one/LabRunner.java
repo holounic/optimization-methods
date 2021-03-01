@@ -3,8 +3,6 @@ package lab.one;
 import lab.one.algorithm.*;
 import lab.one.util.Segment;
 import latex.TableBuilder;
-
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +16,12 @@ public class LabRunner {
     private static final DoubleFunction<Double> FUNC =
             x -> -5 * Math.pow(x, 5) + 4 * Math.pow(x, 4) - 12 * Math.pow(x, 3) + 11 * x * x - 2 * x + 1;
 
+//    private static final DoubleFunction<Double> FUNC =
+//            x -> -5 * Math.pow(x, 5) - 4 * Math.pow(x, 4) + 12 * Math.pow(x, 3) + 11 * x * x - 2 * x + 1;
+
     private static final double FROM = -0.5;
     private static final double TO = 0.5;
-    private static final double EPS = 0.00001;
+    private static final double EPS = 0.001;
 
     private static void printAlgoStats(Algorithm performedAlgo, double answer) {
         out.println(performedAlgo.getClass().getName());
@@ -32,6 +33,7 @@ public class LabRunner {
     }
 
     private static final List<Algorithm> algorithms = List.of(
+            new Brent(FUNC, EPS),
             new Parabolic(FUNC, EPS),
             new Dichotomy(FUNC, EPS),
             new GoldenRatio(FUNC, EPS),
@@ -60,7 +62,7 @@ public class LabRunner {
 
         double curEps = MIN_EPS;
         while (curEps < MAX_EPS) {
-            algorithm = new Dichotomy(FUNC);
+            algorithm = new Parabolic(FUNC, curEps);
             Segment segment = new Segment(FROM, TO);
             algorithm.apply(segment);
             epsValues.add(Math.log(curEps));
@@ -72,6 +74,7 @@ public class LabRunner {
 
 
     public static void main(String[] args) {
-        runAlgorithm(new Parabolic(FUNC, EPS));
+        runAlgorithm(new Brent(FUNC, EPS));
+//        epsAndNumUpdates(50);
     }
 }

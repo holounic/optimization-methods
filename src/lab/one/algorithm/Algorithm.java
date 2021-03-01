@@ -21,7 +21,7 @@ public abstract class Algorithm {
     }
 
     protected boolean done(Segment segment) {
-        return segment.length() <= eps;
+        return segment.length() <= eps || numUpdates >= 100;
     }
 
     public double apply(Segment segment) {

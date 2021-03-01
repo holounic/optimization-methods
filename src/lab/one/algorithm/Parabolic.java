@@ -9,6 +9,11 @@ public class Parabolic extends Algorithm {
     public Parabolic(DoubleFunction<Double> func, double eps) {
         super(func, eps);
     }
+
+    public Parabolic(DoubleFunction<Double> func) {
+        super(func, PRECISENESS);
+    }
+
     private double x1, x2, x3, f1, f2, f3;
 
     private DoubleBinaryOperator xForm = (x, y) -> x2 - 0.5 * (Math.pow((x2 - x1), 2)
