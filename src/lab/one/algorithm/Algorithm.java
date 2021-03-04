@@ -31,7 +31,7 @@ public abstract class Algorithm {
             Segment newSegment = step(currentSegment);
             segments.add(currentSegment);
             currentSegment = newSegment;
-            ++numUpdates;
+            numUpdates++;
         }
         return getMinX(currentSegment);
     }

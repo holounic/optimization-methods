@@ -17,8 +17,8 @@ public class TableBuilder {
                     segment.getComputedXs().stream().map(Object::toString).collect(Collectors.joining(", "));
             String fs =
                     segment.getComputedFs().stream().map(Object::toString).collect(Collectors.joining(", "));
-            out.println(String.format("& [%f, %f] & %f & %s & %s \\\\",
-                    segment.from(), segment.to(), segment.length(), xs, fs));
+            out.printf("& [%f, %f] & %f & %s & %s \\\\%n",
+                    segment.from(), segment.to(), segment.length(), xs, fs);
         }
     }
 

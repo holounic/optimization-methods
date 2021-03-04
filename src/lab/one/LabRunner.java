@@ -5,7 +5,9 @@ import lab.one.util.Segment;
 import latex.TableBuilder;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.DoubleFunction;
 
 public class LabRunner {
@@ -13,7 +15,7 @@ public class LabRunner {
     private static final PrintStream out = System.out;
     private static final TableBuilder tableBuilder = new TableBuilder();
 
-    private static final DoubleFunction<Double> FUNC =
+    public static final DoubleFunction<Double> FUNC =
             x -> -5 * Math.pow(x, 5) + 4 * Math.pow(x, 4) - 12 * Math.pow(x, 3) + 11 * x * x - 2 * x + 1;
 
 //    private static final DoubleFunction<Double> FUNC =
@@ -21,7 +23,7 @@ public class LabRunner {
 
     private static final double FROM = -0.5;
     private static final double TO = 0.5;
-    private static final double EPS = 0.001;
+    public static final double EPS = 0.001;
 
     private static void printAlgoStats(Algorithm performedAlgo, double answer) {
         out.println(performedAlgo.getClass().getName());
@@ -32,20 +34,23 @@ public class LabRunner {
         out.println("==========================");
     }
 
-    private static final List<Algorithm> algorithms = List.of(
-            new Brent(FUNC, EPS),
-            new Parabolic(FUNC, EPS),
-            new Dichotomy(FUNC, EPS),
-            new GoldenRatio(FUNC, EPS),
-            new Fibonacci(FUNC, 8));
+    private static final Map<String, Algorithm> algorithms = new HashMap<>();
+    
+    static {
+        algorithms.put("brent", new Brent(FUNC, EPS));
+        algorithms.put("parabolic", new Parabolic(FUNC, EPS));
+        algorithms.put("dichotomy", new Dichotomy(FUNC, EPS));
+        algorithms.put("golden-ratio", new GoldenRatio(FUNC, EPS));
+        algorithms.put("fibonacci", new Fibonacci(FUNC, 8));
+    }
 
     private static void runAllAlgorithms() {
-        for (Algorithm algorithm : algorithms) {
+        for (Algorithm algorithm : algorithms.values()) {
             runAlgorithm(algorithm);
         }
     }
 
-    private static void runAlgorithm(Algorithm algorithm) {
+    public static void runAlgorithm(Algorithm algorithm) {
         out.println(algorithm.getClass().getName());
         double answer = algorithm.apply(new Segment(FROM, TO));
         printAlgoStats(algorithm, answer);
@@ -73,7 +78,7 @@ public class LabRunner {
     }
 
 
-    public static void main(String[] args) {
+    private static void main(String[] args) {
         runAlgorithm(new Brent(FUNC, EPS));
 //        epsAndNumUpdates(50);
     }

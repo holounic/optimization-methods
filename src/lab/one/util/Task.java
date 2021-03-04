@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.function.DoubleFunction;
 
 public class Task {
-    private static final DoubleFunction<Double> FUNC =
+    public static final DoubleFunction<Double> FUNC =
             x -> -5 * Math.pow(x, 5) + 4 * Math.pow(x, 4) - 12 * Math.pow(x, 3) + 11 * x * x - 2 * x + 1;
     private static final double FROM = -0.5;
     private static final double TO = 0.5;
@@ -14,13 +14,25 @@ public class Task {
     private final Algorithm algorithm;
 
     public Task(AlgoName algoName) {
-        this.algorithm = switch (algoName) {
-            case BRENT -> new Brent(FUNC);
-            case FIBONACCI -> new Fibonacci(FUNC);
-            case DICHOTOMY -> new Dichotomy(FUNC);
-            case PARABOLIC -> new Parabolic(FUNC);
-            case GOLDEN_RATIO -> new GoldenRatio(FUNC);
-        };
+        switch (algoName) {
+            case BRENT:
+                this.algorithm = new Brent(FUNC);
+                break;
+            case FIBONACCI:
+                this.algorithm = new Fibonacci(FUNC);
+                break;
+            case DICHOTOMY:
+                this.algorithm = new Dichotomy(FUNC);
+                break;
+            case PARABOLIC:
+                this.algorithm = new Parabolic(FUNC);
+                break;
+            case GOLDEN_RATIO:
+                this.algorithm = new GoldenRatio(FUNC);
+                break;
+            default:
+                throw new AssertionError();
+        }
     }
 
     public double f(double x) {
