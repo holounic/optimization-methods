@@ -1,30 +1,41 @@
 package lab.two.algorithm;
 
+import java.util.Arrays;
+
 public class GradientDescent extends Function {
     private static double[] startPoint;
     private static double eps;
 
-    private double[] calculateGradientDescent(double x, double y, double eps) {
+    private double[] calculateGradientDescent(double eps, double ... args) {
         boolean stop = false;
         double lambda = 0.01;
         int iter = 0;
-        double x0 = x, y0 = y;
+        double[] args0 = Arrays.copyOf(args, args.length);
+        double[] args1 = new double[args.length];
 
         while (!stop) {
-            double[] grad = gradient(x0, y0);
-            double x1 = x0 - grad[0] * lambda;
-            double y1 = y0 - grad[1] * lambda;
-            double dist = (x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0);
+            double[] grad = gradient(args0);
+            for (int i = 0; i < args1.length; i++) {
+                args1[i] = args0[i] - grad[i] * lambda;
+            }
 
-            if (dist < eps * eps && Math.abs(func(x0, y0) - func(x1, y1)) < eps) {
+            double dist = 0;
+            for (int i = 0; i < args1.length; i++) {
+                dist += Math.pow(args1[i] - args0[i], 2);
+            }
+
+            if (dist < eps * eps && Math.abs(func(args0) - func(args1)) < eps) {
                 stop = true;
             }
 
-            x0 = x1;
-            y0 = y1;
+            args0 = Arrays.copyOf(args1, args1.length);
             iter += 1;
         }
-        return new double[]{x0, y0, iter};
+
+        double[] ans = new double[args0.length + 1];
+        System.arraycopy(args0, 0, ans, 0, args0.length);
+        ans[ans.length - 1] = iter;
+        return ans;
     }
 
     @Override
@@ -35,8 +46,6 @@ public class GradientDescent extends Function {
 
     @Override
     protected double[] returnAns() {
-        double x = startPoint[0];
-        double y = startPoint[1];
-        return calculateGradientDescent(x, y, eps);
+        return calculateGradientDescent(eps, startPoint);
     }
 }

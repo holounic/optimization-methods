@@ -20,6 +20,6 @@ public class Lab2Runner {
     }
 
     public static void main(String[] args) {
-        runAlgorithm(new SteepestDescent());
+        runAlgorithm(new GradientDescent());
     }
 }

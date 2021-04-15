@@ -5,8 +5,8 @@ public abstract class Function {
     protected abstract double[] returnAns();
 
     protected final double func(final double ... args) {
-        return 10 * Math.pow(args[0], 2) + Math.pow(args[1], 2);
-        //return Math.pow(args[0], 2) / 15 + Math.pow(args[1], 2) / 2;
+        //return 10 * Math.pow(args[0], 2) + Math.pow(args[1], 2);
+        return Math.pow(args[0], 2) / 15 + Math.pow(args[1], 2) / 2;
     }
 
     protected final double[] gradient(final double ... args) {
