@@ -1,5 +1,7 @@
 package lab.two.algorithm;
 
+import java.util.Arrays;
+
 public class ConjugateGradients extends Function {
     private static double[] startPoint;
     private static double eps;
@@ -41,22 +43,23 @@ public class ConjugateGradients extends Function {
         } return ans;
     }
 
-    private double[] calculateConjugateGradients(double x, double y, double eps) {
+    private double[] calculateConjugateGradients(double eps, double ... args) {
         boolean stop = false;
         int iter = 0;
 
-        double[] p = gradient(x, y);
+        double[] p = gradient(args);
         for (int i = 0; i < p.length; i++) p[i] = -p[i];
-        double[] grad = p;
+        double[] grad = Arrays.copyOf(p, p.length);
 
         while (!stop) {
             iter += 1;
 
-            double alpha = GoldenRatio(eps, p, x, y);
-            x = x + alpha * p[0];
-            y = y + alpha * p[1];
+            double alpha = GoldenRatio(eps, p, args);
+            for (int i = 0; i < args.length; i++) {
+                args[i] += alpha * p[i];
+            }
 
-            double[] grad1 = gradient(x, y);
+            double[] grad1 = gradient(args);
             for (int i = 0; i < grad1.length; i++) grad1[i] = -grad1[i];
 
             double beta = iter % 2 == 1 ? innerproduct(grad1, grad1) / innerproduct(grad, grad) : 0;
@@ -64,19 +67,20 @@ public class ConjugateGradients extends Function {
                 p[i] = grad1[i] + beta * p[i];
             }
 
-            grad = grad1;
+            grad = Arrays.copyOf(grad1, grad1.length);
             if (innerproduct(grad, grad) <= eps) {
                 stop = true;
             }
         }
 
-        return new double[]{x, y, iter};
+        double[] ans = new double[args.length + 1];
+        System.arraycopy(args, 0, ans, 0, args.length);
+        ans[ans.length - 1] = iter;
+        return ans;
     }
 
     @Override
     public double[] returnAns() {
-        double x = startPoint[0];
-        double y = startPoint[1];
-        return calculateConjugateGradients(x, y, eps);
+        return calculateConjugateGradients(eps, startPoint);
     }
 }

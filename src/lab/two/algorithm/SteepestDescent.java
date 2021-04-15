@@ -1,5 +1,7 @@
 package lab.two.algorithm;
 
+import java.util.Arrays;
+
 public class SteepestDescent extends Function {
     private static double[] startPoint;
     private static double eps;
@@ -39,30 +41,35 @@ public class SteepestDescent extends Function {
         return new double[]{(a[0] + b[0]) / 2, (a[1] + b[1]) / 2};
     }
 
-    private double[] calculateSteepestDescent(double x, double y, double eps) {
+    private double[] calculateSteepestDescent(double eps, double ... args) {
         boolean stop = false;
         int iter = 0;
-        double x0 = x, y0 = y;
+        double[] args0 = Arrays.copyOf(args, args.length);
 
         while (!stop) {
-            double[] grad = gradient(x0, y0);
-            double[] point = GoldenRatio(
-                    eps,
-                    new double[]{x0, y0},
-                    new double[]{-grad[0], -grad[1]});
+            double[] grad = gradient(args0);
+            double[] minusGrad = Arrays.copyOf(grad, grad.length);
+            for (int i = 0; i < minusGrad.length; i++) {
+                minusGrad[i] = -minusGrad[i];
+            }
+            double[] point = GoldenRatio(eps, args0, minusGrad);
+            double[] args1 = Arrays.copyOf(point, point.length);
+            double dist = 0;
+            for (int i = 0; i < args0.length; i++) {
+                dist += Math.pow((args1[i] - args0[i]), 2);
+            }
 
-            double x1 = point[0], y1 = point[1];
-            double dist = Math.pow((x1 - x0), 2) + Math.pow((y1 - y0), 2);
-
-            if (dist < eps * eps && Math.abs(func(x0, y0) - func(x1, y1)) < eps) {
+            if (dist < eps * eps && Math.abs(func(args0) - func(args1)) < eps) {
                 stop = true;
             }
 
-            x0 = x1;
-            y0 = y1;
+            args0 = Arrays.copyOf(args1, args1.length);
             iter += 1;
         }
-        return new double[]{x0, y0, iter};
+        double[] ans = new double[args0.length + 1];
+        System.arraycopy(args0, 0, ans, 0, args0.length);
+        ans[ans.length - 1] = iter;
+        return ans;
     }
 
 
@@ -74,8 +81,6 @@ public class SteepestDescent extends Function {
 
     @Override
     protected double[] returnAns() {
-        double x = startPoint[0];
-        double y = startPoint[1];
-        return calculateSteepestDescent(x, y, eps);
+        return calculateSteepestDescent(eps, startPoint);
     }
 }
