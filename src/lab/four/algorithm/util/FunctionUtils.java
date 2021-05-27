@@ -4,11 +4,10 @@ import java.util.Arrays;
 
 public class FunctionUtils {
     private FunctionUtils() {}
-    private static final double GRADIENT_STEP = 0.01;
+    private static final double GRADIENT_STEP = 0.001;
 
 
     public static double[] gradient(DoubleMultiFunction function, double[] vals) {
-        double baseVal = function.apply(vals);
         double[] g = new double[vals.length];
         double[] plus = Arrays.copyOf(vals, vals.length);
         double[] minus = Arrays.copyOf(vals, vals.length);

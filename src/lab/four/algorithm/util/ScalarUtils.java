@@ -1,12 +1,22 @@
 package lab.four.algorithm.util;
 
+import java.util.Arrays;
+
 public class ScalarUtils {
     private ScalarUtils() {}
 
-    public static double scalar(double[] a, double[] b) {
-        double res = 0;
+    public static double[] mul(double[] s, double x) {
+        double[] res = Arrays.copyOf(s, s.length);
+        for (int i = 0; i < s.length; i++) {
+            res[i] *= x;
+        }
+        return res;
+    }
+
+    public static double[] sum(double[] a, double[] b) {
+        double[] res = Arrays.copyOf(a, a.length);
         for (int i = 0; i < a.length; i++) {
-            res += a[i] * b[i];
+            res[i] += b[i];
         }
         return res;
     }
@@ -21,16 +31,12 @@ public class ScalarUtils {
         return ans;
     }
 
-    public static void negate(double[] a) {
-        for (int i = 0; i < a.length; i++) {
-            a[i] *= -1;
+    public static double[] negate(double[] a) {
+        double[] b = Arrays.copyOf(a, a.length);
+        for (int i = 0; i < b.length; i++) {
+            b[i] *= -1;
         }
-    }
-
-    public static void negate(double[][] a) {
-        for (double[] doubles : a) {
-            negate(doubles);
-        }
+        return b;
     }
 
     public static double[] diff(double[] a, double[] b) {

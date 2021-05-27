@@ -1,6 +1,7 @@
 package lab.four;
 
 import lab.four.algorithm.ClassyNewton;
+import lab.four.algorithm.UnarySearchNewton;
 import lab.four.algorithm.util.DoubleMultiFunction;
 
 import java.util.Arrays;
@@ -17,11 +18,20 @@ public class LabRunner {
         ClassyNewton newton = new ClassyNewton(f, x);
         double[] ans = newton.optimize();
         System.out.println(Arrays.toString(ans));
-        System.out.println("Num iterations" + newton.getIterations());
+        System.out.println("Num iterations: " + newton.getIterations());
+    }
+
+    private static void testUnarySearchNewton(DoubleMultiFunction f, double[] x) {
+        UnarySearchNewton newton = new UnarySearchNewton(f, x);
+        double[] ans = newton.optimize();
+        System.out.println(Arrays.toString(ans));
+        System.out.println("Num iterations: " + newton.getIterations());
     }
 
 
     public static void main(String[] args) {
-        testClassyNewton(f1, x1);
+//        testClassyNewton(f1, x1);
+//        testClassyNewton(f2, x2);
+        testUnarySearchNewton(f2, x2);
     }
 }

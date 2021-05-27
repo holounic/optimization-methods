@@ -8,9 +8,9 @@ import java.util.Arrays;
 
 public class ClassyNewton {
 
-    protected static final double EPS = 0.00000000000001;
-    private final DoubleMultiFunction function;
-    private final double[] x;
+    protected static final double EPS = 0.000000000001;
+    protected final DoubleMultiFunction function;
+    protected final double[] x;
     protected int iterations = 0;
 
     public ClassyNewton(DoubleMultiFunction function, double[] x) {
@@ -29,11 +29,10 @@ public class ClassyNewton {
         do {
             System.out.println(Arrays.toString(x));
             double[] grad = FunctionUtils.gradient(function, x);
-            ScalarUtils.negate(grad);
 
             double[][] h = FunctionUtils.hessian(function, x);
 
-            p = new LES(h, grad).solve();
+            p = new LES(h, ScalarUtils.negate(grad)).solve();
 
             prevX = Arrays.copyOf(x, x.length);
             this.updateArgs(p);
