@@ -1,7 +1,7 @@
-package lab.four.algorithm;
+package lab.four.algorithm.newton;
 
-import lab.four.algorithm.util.DoubleMultiFunction;
-import lab.four.algorithm.util.ScalarUtils;
+import lab.four.util.DoubleMultiFunction;
+import lab.four.util.LinearUtils;
 
 public class DescentDirectionNewton extends UnarySearchNewton {
     public DescentDirectionNewton(DoubleMultiFunction function, double[] x) {
@@ -10,8 +10,8 @@ public class DescentDirectionNewton extends UnarySearchNewton {
 
     @Override
     protected void updateArgs(double[] p) {
-        if (ScalarUtils.scalar(p, grad) < 0) {
-            p = ScalarUtils.negate(grad);
+        if (LinearUtils.scalar(p, grad) < 0) {
+            p = LinearUtils.negate(grad);
         }
         super.updateArgs(p);
     }

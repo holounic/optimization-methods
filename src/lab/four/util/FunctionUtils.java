@@ -1,4 +1,4 @@
-package lab.four.algorithm.util;
+package lab.four.util;
 
 import java.util.Arrays;
 

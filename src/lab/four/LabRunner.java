@@ -1,9 +1,10 @@
 package lab.four;
 
-import lab.four.algorithm.ClassyNewton;
-import lab.four.algorithm.DescentDirectionNewton;
-import lab.four.algorithm.UnarySearchNewton;
-import lab.four.algorithm.util.DoubleMultiFunction;
+import lab.four.algorithm.newton.ClassyNewton;
+import lab.four.algorithm.newton.DescentDirectionNewton;
+import lab.four.algorithm.newton.UnarySearchNewton;
+import lab.four.algorithm.quasinewton.DFP;
+import lab.four.util.DoubleMultiFunction;
 import java.util.Arrays;
 
 public class LabRunner {
@@ -38,6 +39,21 @@ public class LabRunner {
         System.out.println("Num iterations: " + newton.getIterations());
     }
 
+    private static DoubleMultiFunction f4 = (x) -> Math.pow(x[0] * x[0] + x[1] - 11, 2) + Math.pow(x[0] + x[1] * x[1] - 7, 2);
+    private static DoubleMultiFunction f5 = (x) -> Math.pow(x[0] + 10 * x[1], 2) + 5 * Math.pow(x[2] - x[3], 2)
+            + Math.pow(x[1] - 2 * x[2], 4) + 10 * Math.pow(x[0] - x[3], 4);
+    private static DoubleMultiFunction f6 = (x) -> 100 - 2 / (1 + Math.pow((x[0] - 1) / 2, 2) + Math.pow((x[1] - 2) / 2, 2))
+            - 2 / (1 + Math.pow((x[0] - 2) / 2, 2) + Math.pow((x[1] - 1) / 3, 2));
+
+    private static double[] x0 = new double[]{0, 0};
+
+    private static void testDFP(DoubleMultiFunction f, double[] x) {
+        DFP dfp = new DFP(f, x);
+        double[] ans = dfp.optimize();
+        System.out.println(Arrays.toString(ans));
+        System.out.println("Num iterations: " + dfp.getIterations());
+    }
+
 
     public static void main(String[] args) {
 //        testClassyNewton(f1, x1);
@@ -49,6 +65,7 @@ public class LabRunner {
 //        testUnarySearchNewton(f3, x3);
 
 //        testDescentDirectionNewton(f1, x1);
-        testDescentDirectionNewton(f2, x2);
+//        testDescentDirectionNewton(f2, x2);
+        testDFP(f1, x1);
     }
 }

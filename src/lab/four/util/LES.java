@@ -1,6 +1,4 @@
-package lab.four.algorithm;
-
-import java.util.Arrays;
+package lab.four.util;
 
 public class LES {
     private final double[][] coeffs;

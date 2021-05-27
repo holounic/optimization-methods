@@ -1,4 +1,4 @@
-package lab.four.algorithm.util;
+package lab.four.util;
 
 @FunctionalInterface
 public interface DoubleMultiFunction {

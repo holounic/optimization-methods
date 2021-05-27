@@ -1,9 +1,9 @@
-package lab.four.algorithm;
+package lab.four.algorithm.newton;
 
-import lab.four.algorithm.util.DoubleMultiFunction;
-import lab.four.algorithm.util.FunctionUtils;
-import lab.four.algorithm.util.ScalarUtils;
-
+import lab.four.util.LES;
+import lab.four.util.DoubleMultiFunction;
+import lab.four.util.FunctionUtils;
+import lab.four.util.LinearUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +15,7 @@ public class ClassyNewton {
     protected final double[] x;
     protected double[] grad;
     protected int iterations = 0;
-    protected List<double[]> computesValues = new ArrayList<>();
+    protected List<double[]> computedValues = new ArrayList<>();
 
     public ClassyNewton(DoubleMultiFunction function, double[] x) {
         this.function = function;
@@ -36,14 +36,14 @@ public class ClassyNewton {
 
             double[][] h = FunctionUtils.hessian(function, x);
 
-            p = new LES(h, ScalarUtils.negate(grad)).solve();
+            p = new LES(h, LinearUtils.negate(grad)).solve();
 
             prevX = Arrays.copyOf(x, x.length);
-            computesValues.add(x);
+            computedValues.add(x);
             this.updateArgs(p);
 
             iterations++;
-        } while (ScalarUtils.norm(ScalarUtils.diff(prevX, x)) > EPS);
+        } while (LinearUtils.norm(LinearUtils.sub(prevX, x)) > EPS);
         return x;
     }
 
@@ -51,7 +51,7 @@ public class ClassyNewton {
         return iterations;
     }
 
-    public List<double[]> getComputesValues() {
-        return computesValues;
+    public List<double[]> getComputedValues() {
+        return computedValues;
     }
 }
