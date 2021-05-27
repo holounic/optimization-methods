@@ -4,7 +4,6 @@ import lab.four.algorithm.util.DoubleMultiFunction;
 import lab.four.algorithm.util.ScalarUtils;
 import lab.one.algorithm.Dichotomy;
 import lab.one.util.Segment;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.DoubleFunction;
@@ -16,6 +15,7 @@ public class UnarySearchNewton extends ClassyNewton {
         super(function, x);
     }
 
+    @Override
     protected void updateArgs(double[] p) {
         DoubleFunction<Double> func = (a) -> function.apply(ScalarUtils.sum(x, ScalarUtils.mul(p, a)));
         double alpha = new Dichotomy(func).apply(new Segment(-100, 100));

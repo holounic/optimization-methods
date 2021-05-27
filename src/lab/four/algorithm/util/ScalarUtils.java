@@ -55,4 +55,22 @@ public class ScalarUtils {
         return Math.sqrt(sum);
     }
 
+    public static double[][] transpose(double[][] m) {
+        double[][] t = new double[m.length][m[0].length];
+        for (int i = 0; i < m.length; i++) {
+            for (int j = 0; j < m[i].length; j++) {
+                t[i][j] = m[j][i];
+            }
+        }
+        return t;
+    }
+
+    public static double scalar(double[] a, double[] b) {
+        double sum = 0;
+        for (int i = 0; i < a.length; i++) {
+            sum += a[i] * b[i];
+        }
+        return sum;
+    }
+
 }

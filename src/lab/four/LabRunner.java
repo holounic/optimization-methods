@@ -1,9 +1,9 @@
 package lab.four;
 
 import lab.four.algorithm.ClassyNewton;
+import lab.four.algorithm.DescentDirectionNewton;
 import lab.four.algorithm.UnarySearchNewton;
 import lab.four.algorithm.util.DoubleMultiFunction;
-
 import java.util.Arrays;
 
 public class LabRunner {
@@ -12,6 +12,9 @@ public class LabRunner {
 
     static final DoubleMultiFunction f2 = (x) -> 100 * Math.pow((x[1] - x[0] * x[0]), 2) + Math.pow((1 - x[0] * x[0]), 2);
     static final double[] x2 = new double[]{-1.2, 1};
+
+    static final DoubleMultiFunction f3 = (x) -> Math.pow(x[1] + x[0], 2);
+    static final double[] x3 = new double[]{2, 2};
 
 
     private static void testClassyNewton(DoubleMultiFunction f, double[] x) {
@@ -28,10 +31,24 @@ public class LabRunner {
         System.out.println("Num iterations: " + newton.getIterations());
     }
 
+    private static void testDescentDirectionNewton(DoubleMultiFunction f, double[] x) {
+        DescentDirectionNewton newton = new DescentDirectionNewton(f, x);
+        double[] ans = newton.optimize();
+        System.out.println(Arrays.toString(ans));
+        System.out.println("Num iterations: " + newton.getIterations());
+    }
+
 
     public static void main(String[] args) {
 //        testClassyNewton(f1, x1);
 //        testClassyNewton(f2, x2);
-        testUnarySearchNewton(f2, x2);
+//        testClassyNewton(f3, x3);
+
+//        testUnarySearchNewton(f1, x1);
+//        testUnarySearchNewton(f2, x2);
+//        testUnarySearchNewton(f3, x3);
+
+//        testDescentDirectionNewton(f1, x1);
+        testDescentDirectionNewton(f2, x2);
     }
 }
