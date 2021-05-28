@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.function.DoubleFunction;
 
 public class DFP extends BaseQuasiNewton {
-    private double alpha;
-    private final List<Double> alphas = new ArrayList<>();
+    protected double alpha;
+    protected final List<Double> alphas = new ArrayList<>();
 
-    private void updateAlpha() {
+    protected void updateAlpha() {
         DoubleFunction<Double> func = (a) -> function.apply(LinearUtils.sum(x, LinearUtils.mul(p, a)));
-        alpha = new Dichotomy(func).apply(new Segment(-100, 100));
+        alpha = new Dichotomy(func).apply(new Segment(-1000, 1000));
         alphas.add(alpha);
     }
 
@@ -33,10 +33,9 @@ public class DFP extends BaseQuasiNewton {
         super(function, x);
     }
 
-    protected void updateX() {
+    protected void updateXInner() {
         double[] prevX = Arrays.copyOf(x, x.length);
         x = LinearUtils.sum(x, LinearUtils.mul(p, alpha));
-        computedX.add(x);
         deltaX = LinearUtils.sub(x, prevX);
     }
 
@@ -58,6 +57,7 @@ public class DFP extends BaseQuasiNewton {
         double[] prevW = Arrays.copyOf(w, w.length);
         w = LinearUtils.negate(FunctionUtils.gradient(function, x));
         deltaW = LinearUtils.sub(w, prevW);
+
         double[] v = LinearUtils.mulMatrixVector(gMatrix, deltaW);
         updateGMatrix(v);
 

@@ -9,10 +9,10 @@ public class DescentDirectionNewton extends UnarySearchNewton {
     }
 
     @Override
-    protected void updateX(double[] p) {
+    protected void updateX() {
         if (LinearUtils.scalar(p, grad) < 0) {
             p = LinearUtils.negate(grad);
         }
-        super.updateX(p);
+        super.updateX();
     }
 }

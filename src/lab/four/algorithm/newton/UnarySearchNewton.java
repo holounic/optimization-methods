@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.function.DoubleFunction;
 
 public class UnarySearchNewton extends ClassyNewton {
-    private List<Double> alphas = new ArrayList<>();
+    protected List<Double> alphas = new ArrayList<>();
 
     public UnarySearchNewton(DoubleMultiFunction function, double[] x) {
         super(function, x);
     }
 
     @Override
-    protected void updateX(double[] p) {
+    protected void updateXInner() {
         DoubleFunction<Double> func = (a) -> function.apply(LinearUtils.sum(x, LinearUtils.mul(p, a)));
         double alpha = new Dichotomy(func).apply(new Segment(-100, 100));
         alphas.add(alpha);

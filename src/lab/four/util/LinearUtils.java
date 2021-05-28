@@ -29,6 +29,14 @@ public class LinearUtils {
         return res;
     }
 
+    public static double[][] sum(double[][] a, double[][] b) {
+        double[][] res = new double[a.length][0];
+        for (int i = 0; i < a.length; i++) {
+            res[i] = sum(a[i], b[i]);
+        }
+        return res;
+    }
+
     public static double[] mulMatrixVector(double[][] a, double[] s) {
         double[] ans = new double[a.length];
         for (int i = 0; i < a.length; i++) {
@@ -105,6 +113,14 @@ public class LinearUtils {
         double[][] m = new double[n][n];
         for (int i = 0; i < n; i++) {
             m[i][i] = 1;
+        }
+        return m;
+    }
+
+    public static double[][] I(int n, double x) {
+        double[][] m = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            m[i][i] = x;
         }
         return m;
     }

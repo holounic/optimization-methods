@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class FunctionUtils {
     private FunctionUtils() {}
-    private static final double GRADIENT_STEP = 0.0001;
+    private static final double GRADIENT_STEP = 0.00001;
 
     public static double[] gradient(DoubleMultiFunction function, double[] vals) {
         double[] g = new double[vals.length];
