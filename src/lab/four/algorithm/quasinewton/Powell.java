@@ -20,7 +20,7 @@ public class Powell extends DFP {
     protected void updateGMatrix(double[] v) {
         double[][] s = LinearUtils.mul(
                 LinearUtils.mulMatrixMatrix(
-                        LinearUtils.wrap(deltaXDot), LinearUtils.wrapEach(deltaXDot)),
+                        LinearUtils.wrapEach(deltaXDot), LinearUtils.wrap(deltaXDot)),
                 1 / LinearUtils.scalar(deltaW, deltaX));
         gMatrix = LinearUtils.sub(gMatrix, s);
     }

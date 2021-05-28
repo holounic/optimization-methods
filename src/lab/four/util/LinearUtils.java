@@ -68,8 +68,6 @@ public class LinearUtils {
     }
 
     public static double[][] sub(double[][] a, double[][] b) {
-        System.out.println(Arrays.deepToString(a));
-        System.out.println(Arrays.deepToString(b));
         double[][] res = new double[a.length][a[0].length];
         for (int i = 0; i < a.length; i++) {
             res[i] = sub(a[i], b[i]);

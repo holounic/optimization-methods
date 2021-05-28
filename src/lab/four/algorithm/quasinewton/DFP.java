@@ -24,6 +24,7 @@ public class DFP extends BaseQuasiNewton {
     protected void firstStep() {
         w = LinearUtils.negate(FunctionUtils.gradient(function, x));
         p = Arrays.copyOf(w, w.length);
+        deltaW = Arrays.copyOf(w, w.length);
         updateAlpha();
         updateX();
     }
@@ -35,19 +36,22 @@ public class DFP extends BaseQuasiNewton {
     protected void updateX() {
         double[] prevX = Arrays.copyOf(x, x.length);
         x = LinearUtils.sum(x, LinearUtils.mul(p, alpha));
+        computedX.add(x);
         deltaX = LinearUtils.sub(x, prevX);
     }
 
     protected void updateGMatrix(double[] v) {
         double[][] first = LinearUtils.mul(
                 LinearUtils.mulMatrixMatrix(
-                LinearUtils.wrap(deltaX), LinearUtils.wrapEach(deltaX)),
+                LinearUtils.wrapEach(deltaX), LinearUtils.wrap(deltaX)),
                 1 / LinearUtils.scalar(deltaW, deltaX));
         double[][] second = LinearUtils.mul(LinearUtils.mulMatrixMatrix(
-                LinearUtils.wrap(v), LinearUtils.wrapEach(v)),
+                LinearUtils.wrapEach(v), LinearUtils.wrap(v)),
                 1 / LinearUtils.scalar(v, deltaW));
-        gMatrix = LinearUtils.sub(LinearUtils.sub(gMatrix, first), second);
+        gMatrix = LinearUtils.sub(
+                LinearUtils.sub(gMatrix, first), second);
     }
+
 
     @Override
     protected void step() {
@@ -59,6 +63,7 @@ public class DFP extends BaseQuasiNewton {
 
         p = LinearUtils.mulMatrixVector(gMatrix, w);
         updateAlpha();
+        updateX();
     }
 
     public List<Double> getAlphas() {

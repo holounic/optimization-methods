@@ -1,14 +1,12 @@
 package lab.four.algorithm.newton;
 
-import lab.four.util.LES;
-import lab.four.util.DoubleMultiFunction;
-import lab.four.util.FunctionUtils;
-import lab.four.util.LinearUtils;
+import lab.four.util.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ClassyNewton {
+public class ClassyNewton implements MultiOptimizationMethod {
 
     protected static final double EPS = 0.00001;
     protected final DoubleMultiFunction function;
@@ -28,6 +26,7 @@ public class ClassyNewton {
         }
     }
 
+    @Override
     public double[] optimize() {
         double[] p, prevX;
         do {

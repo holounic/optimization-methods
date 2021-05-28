@@ -4,6 +4,7 @@ import lab.four.algorithm.newton.ClassyNewton;
 import lab.four.algorithm.newton.DescentDirectionNewton;
 import lab.four.algorithm.newton.UnarySearchNewton;
 import lab.four.algorithm.quasinewton.DFP;
+import lab.four.algorithm.quasinewton.Powell;
 import lab.four.util.DoubleMultiFunction;
 import java.util.Arrays;
 
@@ -54,6 +55,13 @@ public class LabRunner {
         System.out.println("Num iterations: " + dfp.getIterations());
     }
 
+    private static void testPowell(DoubleMultiFunction f, double[] x) {
+        Powell p = new Powell(f, x);
+        double[] ans = p.optimize();
+        System.out.println(Arrays.toString(ans));
+        System.out.println("Num iterations: " + p.getIterations());
+    }
+
 
     public static void main(String[] args) {
 //        testClassyNewton(f1, x1);
@@ -66,6 +74,7 @@ public class LabRunner {
 
 //        testDescentDirectionNewton(f1, x1);
 //        testDescentDirectionNewton(f2, x2);
-        testDFP(f1, x1);
+//        testDFP(f2, x2);
+        testPowell(f1, x1);
     }
 }

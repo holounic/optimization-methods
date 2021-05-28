@@ -2,11 +2,11 @@ package lab.four.algorithm.quasinewton;
 
 import lab.four.util.DoubleMultiFunction;
 import lab.four.util.LinearUtils;
-
+import lab.four.util.MultiOptimizationMethod;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseQuasiNewton {
+public abstract class BaseQuasiNewton implements MultiOptimizationMethod {
     protected static final double EPS = 0.00001;
     protected final DoubleMultiFunction function;
     protected double[] x;
@@ -16,8 +16,7 @@ public abstract class BaseQuasiNewton {
     protected double[] deltaW;
     protected double[][] gMatrix;
     protected int iterations = 0;
-    protected List<double[]> computedValues = new ArrayList<>();
-
+    protected List<double[]> computedX = new ArrayList<>();
 
     protected abstract void firstStep();
     protected abstract void step();
@@ -28,6 +27,7 @@ public abstract class BaseQuasiNewton {
         this.gMatrix = LinearUtils.I(x.length);
     }
 
+    @Override
     public double[] optimize() {
         firstStep();
         do {
@@ -39,5 +39,9 @@ public abstract class BaseQuasiNewton {
 
     public int getIterations() {
         return iterations;
+    }
+
+    public List<double[]> getComputedX() {
+        return computedX;
     }
 }
