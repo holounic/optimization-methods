@@ -16,7 +16,7 @@ public class UnarySearchNewton extends ClassyNewton {
     }
 
     @Override
-    protected void updateArgs(double[] p) {
+    protected void updateX(double[] p) {
         DoubleFunction<Double> func = (a) -> function.apply(LinearUtils.sum(x, LinearUtils.mul(p, a)));
         double alpha = new Dichotomy(func).apply(new Segment(-100, 100));
         alphas.add(alpha);

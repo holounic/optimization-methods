@@ -4,8 +4,7 @@ import java.util.Arrays;
 
 public class FunctionUtils {
     private FunctionUtils() {}
-    private static final double GRADIENT_STEP = 0.001;
-
+    private static final double GRADIENT_STEP = 0.0001;
 
     public static double[] gradient(DoubleMultiFunction function, double[] vals) {
         double[] g = new double[vals.length];
@@ -22,29 +21,25 @@ public class FunctionUtils {
         return g;
     }
 
-    public static double[][] hessian(DoubleMultiFunction function, double[] vals) {
-        double baseVal = function.apply(vals);
-        double[] plusShift = new double[vals.length];
-        double[] minusShift = new double[vals.length];
+    public static double[][] hessian(DoubleMultiFunction function, double[] x) {
+        double[] vals = Arrays.copyOf(x, x.length);
 
         double[][] hesse = new double[vals.length][vals.length];
+
         for (int i = 0; i < vals.length; i++) {
-            vals[i] += GRADIENT_STEP;
-            plusShift[i] = function.apply(vals);
-            vals[i] -=  2 * GRADIENT_STEP;
-            minusShift[i] = function.apply(vals);
-            vals[i] += GRADIENT_STEP;
-            hesse[i][i] = (plusShift[i] + 2 * baseVal + minusShift[i]) / (GRADIENT_STEP * GRADIENT_STEP);
-        }
-        for (int i = 0; i < vals.length; i++) {
-            for (int j = i + 1; j < vals.length; j++) {
+            for (int j = 0; j < vals.length; j++) {
                 vals[i] += GRADIENT_STEP;
                 vals[j] += GRADIENT_STEP;
-                double x = function.apply(vals);
-                vals[i] -= GRADIENT_STEP;
+                double x0 = function.apply(vals); // f(x + h, y + h)
+                vals[j] -= 2 * GRADIENT_STEP;
+                double x1 = function.apply(vals); // f(x + h, y - h)
+                vals[i] -= 2 * GRADIENT_STEP;
+                double x2 = function.apply(vals); // f(x - h, y - h)
+                vals[j] += 2 * GRADIENT_STEP;
+                double x3 = function.apply(vals); // f(x - h, y + h);
                 vals[j] -= GRADIENT_STEP;
-                hesse[i][j] = (x - plusShift[i] - plusShift[j] + baseVal) / (GRADIENT_STEP * GRADIENT_STEP);
-                hesse[j][i] = hesse[i][j];
+                vals[i] += GRADIENT_STEP;
+                hesse[i][j] = (x0 - x1 + x2 - x3) / (4 * GRADIENT_STEP * GRADIENT_STEP);
             }
         }
         return hesse;

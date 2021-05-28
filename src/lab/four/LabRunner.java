@@ -15,9 +15,6 @@ public class LabRunner {
     static final DoubleMultiFunction f2 = (x) -> 100 * Math.pow((x[1] - x[0] * x[0]), 2) + Math.pow((1 - x[0] * x[0]), 2);
     static final double[] x2 = new double[]{-1.2, 1};
 
-    static final DoubleMultiFunction f3 = (x) -> Math.pow(x[1] + x[0], 2);
-    static final double[] x3 = new double[]{2, 2};
-
 
     private static void testClassyNewton(DoubleMultiFunction f, double[] x) {
         ClassyNewton newton = new ClassyNewton(f, x);
@@ -66,15 +63,15 @@ public class LabRunner {
     public static void main(String[] args) {
 //        testClassyNewton(f1, x1);
 //        testClassyNewton(f2, x2);
-//        testClassyNewton(f3, x3);
+
 
 //        testUnarySearchNewton(f1, x1);
 //        testUnarySearchNewton(f2, x2);
-//        testUnarySearchNewton(f3, x3);
 
-//        testDescentDirectionNewton(f1, x1);
-//        testDescentDirectionNewton(f2, x2);
-//        testDFP(f2, x2);
+
+        testDescentDirectionNewton(f1, x1);
+        testDescentDirectionNewton(f2, x2);
+        testDFP(f2, x2);
         testPowell(f1, x1);
     }
 }

@@ -7,20 +7,18 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ClassyNewton implements MultiOptimizationMethod {
-
-    protected static final double EPS = 0.00001;
     protected final DoubleMultiFunction function;
     protected final double[] x;
     protected double[] grad;
     protected int iterations = 0;
-    protected List<double[]> computedValues = new ArrayList<>();
+    protected List<double[]> computedX = new ArrayList<>();
 
     public ClassyNewton(DoubleMultiFunction function, double[] x) {
         this.function = function;
         this.x = x;
     }
 
-    protected void updateArgs(double[] p) {
+    protected void updateX(double[] p) {
         for (int i = 0; i < p.length; i++) {
             x[i] += p[i];
         }
@@ -38,11 +36,12 @@ public class ClassyNewton implements MultiOptimizationMethod {
             p = new LES(h, LinearUtils.negate(grad)).solve();
 
             prevX = Arrays.copyOf(x, x.length);
-            computedValues.add(x);
-            this.updateArgs(p);
+            this.updateX(p);
+            computedX.add(x);
+            System.out.println(Arrays.toString(x) + " x");
 
             iterations++;
-        } while (LinearUtils.norm(LinearUtils.sub(prevX, x)) > EPS);
+        } while (LinearUtils.norm(p) > EPS);
         return x;
     }
 
@@ -50,7 +49,7 @@ public class ClassyNewton implements MultiOptimizationMethod {
         return iterations;
     }
 
-    public List<double[]> getComputedValues() {
-        return computedValues;
+    public List<double[]> getComputedX() {
+        return computedX;
     }
 }
