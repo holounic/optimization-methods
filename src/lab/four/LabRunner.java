@@ -107,9 +107,9 @@ public class LabRunner {
     private static double[] x122 = new double[]{-108, 8};
 
     public static void main(String[] args) {
-        testMarquardt(f12, x122);
-        testModifiedMarquardt(f12, x122);
-        testClassyNewton(f12, x122);
+        testMarquardt(f1, x1);
+        testModifiedMarquardt(f1, x1);
+
 //        testClassyNewton(f12, x12);
 
 //        testClassyNewton(f1, x1);

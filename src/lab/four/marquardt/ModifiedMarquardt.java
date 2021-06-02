@@ -2,16 +2,10 @@ package lab.four.marquardt;
 
 import lab.four.util.*;
 
-import java.util.Arrays;
-
-public class ModifiedMarquardt extends MultiOptimizationMethod {
-    protected double tau;
-    protected double[] p;
-    protected double[] y;
+public class ModifiedMarquardt extends Marquardt {
 
     public ModifiedMarquardt(DoubleMultiFunction function, double[] x) {
-        super(function, x);
-        this.tau = 0;
+        super(function, x, 0);
     }
 
     @Override
@@ -26,18 +20,5 @@ public class ModifiedMarquardt extends MultiOptimizationMethod {
         if (!LinearUtils.equal(right, LinearUtils.mulMatrixMatrix(L, LinearUtils.transpose(L)))) {
             tau = Math.max(1, 2 * tau);
         }
-    }
-
-    @Override
-    protected void firstStep() { }
-
-    @Override
-    protected boolean done() {
-        return LinearUtils.norm(p) < EPS;
-    }
-
-    @Override
-    protected void updateXInner() {
-        x = Arrays.copyOf(y, y.length);
     }
 }
