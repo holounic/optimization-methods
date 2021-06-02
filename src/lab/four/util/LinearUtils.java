@@ -137,4 +137,18 @@ public class LinearUtils {
         return ans;
     }
 
+    public static boolean equal(double[][] a, double[][] b) {
+        if (a.length != b.length || a[0].length != b[0].length) {
+            return false;
+        }
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[0].length; j++) {
+                if (a[i][j] != b[i][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }

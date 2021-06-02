@@ -20,6 +20,7 @@ public class LabRunner {
         ClassyNewton newton = new ClassyNewton(f, x);
         double[] ans = newton.optimize();
         System.out.println(Arrays.toString(ans));
+        System.out.println("f(x*): " + f.apply(ans));
         System.out.println("Num iterations: " + newton.getIterations());
     }
 
@@ -28,6 +29,7 @@ public class LabRunner {
         UnarySearchNewton newton = new UnarySearchNewton(f, x);
         double[] ans = newton.optimize();
         System.out.println(Arrays.toString(ans));
+        System.out.println("f(x*): " + f.apply(ans));
         System.out.println("Num iterations: " + newton.getIterations());
     }
 
@@ -36,6 +38,7 @@ public class LabRunner {
         DescentDirectionNewton newton = new DescentDirectionNewton(f, x);
         double[] ans = newton.optimize();
         System.out.println(Arrays.toString(ans));
+        System.out.println("f(x*): " + f.apply(ans));
         System.out.println("Num iterations: " + newton.getIterations());
     }
 
@@ -52,6 +55,7 @@ public class LabRunner {
         System.out.println("=====Testing DFP====");
         DFP dfp = new DFP(f, x);
         double[] ans = dfp.optimize();
+        System.out.println("f(x*): " + f.apply(ans));
         System.out.println(Arrays.toString(ans));
         System.out.println("Num iterations: " + dfp.getIterations());
     }
@@ -61,12 +65,27 @@ public class LabRunner {
         Powell p = new Powell(f, x);
         double[] ans = p.optimize();
         System.out.println("Ans: " + Arrays.toString(ans));
+        System.out.println("f(x*): " + f.apply(ans));
         System.out.println("Num iterations: " + p.getIterations());
+        System.out.println("Preciseness: " + p.EPS);
         System.out.println();
     }
 
+    private static DoubleMultiFunction f11 = (x) -> x[0] * x[0] + x[1] * x[1] + x[0];
+    private static double[] x110 = new double[]{1.2, 5};
+    private static double[] x111 = new double[]{100, 805.6};
+    private static double[] x112 = new double[]{-103, -856};
+
+    private static DoubleMultiFunction f12 = (x) -> 25 / 8 * Math.pow(x[0], 2)
+            + Math.pow(x[0], 4) + 3 * Math.pow(x[1], 4) + x[1] + 14 * x[0];
+    private static double[] x120 = new double[]{0.1, -0.15};
+    private static double[] x121 = new double[]{-1.8, -0.8};
+    private static double[] x122 = new double[]{-108, 8};
 
     public static void main(String[] args) {
+        testClassyNewton(f12, x122);
+//        testClassyNewton(f12, x12);
+
 //        testClassyNewton(f1, x1);
 //        testClassyNewton(f2, x2);
 
@@ -79,10 +98,10 @@ public class LabRunner {
 //        testDescentDirectionNewton(f2, x2);
 //        testDFP(f1, x1);
 //        testDFP(f2, x2);
-        testPowell(f1, x1);
-        testPowell(f2, x2);
-
-        testDFP(f4, new double[]{0, 1});
-        testPowell(f4, new double[]{0, 1});
+//        testPowell(f1, x1);
+//        testPowell(f2, x2);
+//
+//        testDFP(f4, new double[]{0, 1});
+//        testPowell(f4, new double[]{0, 1});
     }
 }

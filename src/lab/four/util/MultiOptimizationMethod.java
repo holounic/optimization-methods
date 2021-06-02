@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class MultiOptimizationMethod {
-    protected double EPS = 0.000001;
+    public static final double EPS = 0.000001;
 
     protected final DoubleMultiFunction function;
     protected double[] x;
