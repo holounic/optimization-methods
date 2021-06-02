@@ -5,6 +5,8 @@ import lab.four.algorithm.newton.DescentDirectionNewton;
 import lab.four.algorithm.newton.UnarySearchNewton;
 import lab.four.algorithm.quasinewton.DFP;
 import lab.four.algorithm.quasinewton.Powell;
+import lab.four.marquardt.Marquardt;
+import lab.four.marquardt.ModifiedMarquardt;
 import lab.four.util.DoubleMultiFunction;
 import java.util.Arrays;
 
@@ -71,6 +73,28 @@ public class LabRunner {
         System.out.println();
     }
 
+    private static void testMarquardt(DoubleMultiFunction f, double[] x) {
+        System.out.println("=====Testing Marquardt====");
+        Marquardt m = new Marquardt(f, x, 1);
+        double[] ans = m.optimize();
+        System.out.println("Ans: " + Arrays.toString(ans));
+        System.out.println("f(x*): " + f.apply(ans));
+        System.out.println("Num iterations: " + m.getIterations());
+        System.out.println("Preciseness: " + m.EPS);
+        System.out.println();
+    }
+
+    private static void testModifiedMarquardt(DoubleMultiFunction f, double[] x) {
+        System.out.println("=====Testing Modified Marquardt====");
+        ModifiedMarquardt m = new ModifiedMarquardt(f, x);
+        double[] ans = m.optimize();
+        System.out.println("Ans: " + Arrays.toString(ans));
+        System.out.println("f(x*): " + f.apply(ans));
+        System.out.println("Num iterations: " + m.getIterations());
+        System.out.println("Preciseness: " + m.EPS);
+        System.out.println();
+    }
+
     private static DoubleMultiFunction f11 = (x) -> x[0] * x[0] + x[1] * x[1] + x[0];
     private static double[] x110 = new double[]{1.2, 5};
     private static double[] x111 = new double[]{100, 805.6};
@@ -83,6 +107,8 @@ public class LabRunner {
     private static double[] x122 = new double[]{-108, 8};
 
     public static void main(String[] args) {
+        testMarquardt(f12, x122);
+        testModifiedMarquardt(f12, x122);
         testClassyNewton(f12, x122);
 //        testClassyNewton(f12, x12);
 
