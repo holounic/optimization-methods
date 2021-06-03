@@ -20,5 +20,6 @@ public class ModifiedMarquardt extends Marquardt {
         if (!LinearUtils.equal(right, LinearUtils.mulMatrixMatrix(L, LinearUtils.transpose(L)))) {
             tau = Math.max(1, 2 * tau);
         }
+        tauValues.add(tau);
     }
 }

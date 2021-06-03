@@ -1,17 +1,22 @@
 package lab.four.marquardt;
 
 import lab.four.util.*;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Marquardt extends MultiOptimizationMethod {
     protected static final double BETA = 0.0001;
     protected double tau;
     protected double[] p;
     protected double[] y;
+    protected List<Double> tauValues = new ArrayList<>();
 
     public Marquardt(DoubleMultiFunction function, double[] x, double tau) {
         super(function, x);
         this.tau = tau;
+        tauValues.add(tau);
     }
 
     @Override
@@ -27,6 +32,7 @@ public class Marquardt extends MultiOptimizationMethod {
         } while (function.apply(y) > baseVal);
         updateX();
         tau *= BETA;
+        tauValues.add(tau);
     }
 
     @Override
@@ -40,5 +46,9 @@ public class Marquardt extends MultiOptimizationMethod {
     @Override
     protected void updateXInner() {
         x = Arrays.copyOf(y, y.length);
+    }
+
+    public List<Double> getTauValues() {
+        return tauValues;
     }
 }
