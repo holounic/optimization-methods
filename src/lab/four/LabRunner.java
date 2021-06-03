@@ -81,6 +81,7 @@ public class LabRunner {
         System.out.println("f(x*): " + f.apply(ans));
         System.out.println("Num iterations: " + m.getIterations());
         System.out.println("Preciseness: " + m.EPS);
+        System.out.println("Taus: " + m.getTauValues());
         System.out.println();
     }
 
@@ -92,6 +93,8 @@ public class LabRunner {
         System.out.println("f(x*): " + f.apply(ans));
         System.out.println("Num iterations: " + m.getIterations());
         System.out.println("Preciseness: " + m.EPS);
+        System.out.println("Taus: " + m.getTauValues());
+        System.out.println("Cholesky: " + m.getCholeskyApproximations());
         System.out.println();
     }
 
@@ -107,8 +110,8 @@ public class LabRunner {
     private static double[] x122 = new double[]{-108, 8};
 
     public static void main(String[] args) {
-        testMarquardt(f1, x1);
-        testModifiedMarquardt(f1, x1);
+        testMarquardt(f2, x2);
+        testModifiedMarquardt(f2, x2);
 
 //        testClassyNewton(f12, x12);
 
