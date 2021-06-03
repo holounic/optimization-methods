@@ -8,6 +8,8 @@ import lab.four.algorithm.quasinewton.Powell;
 import lab.four.marquardt.Marquardt;
 import lab.four.marquardt.ModifiedMarquardt;
 import lab.four.util.DoubleMultiFunction;
+import lab.four.util.RosenbrockUtil;
+
 import java.util.Arrays;
 
 public class LabRunner {
@@ -110,8 +112,8 @@ public class LabRunner {
     private static double[] x122 = new double[]{-108, 8};
 
     public static void main(String[] args) {
-        testMarquardt(f2, x2);
-        testModifiedMarquardt(f2, x2);
+        testMarquardt(RosenbrockUtil.function, RosenbrockUtil.generateInput(100, true));
+        testModifiedMarquardt(RosenbrockUtil.function, RosenbrockUtil.generateInput(100, true));
 
 //        testClassyNewton(f12, x12);
 

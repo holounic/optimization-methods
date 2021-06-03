@@ -31,7 +31,7 @@ public class ModifiedMarquardt extends Marquardt {
         double[][] L = new Cholesky(right).decompose();
 
         int numCholesky = 0;
-        while (!LinearUtils.equal(right, LinearUtils.mulMatrixMatrix(L, LinearUtils.transpose(L))) && numCholesky < 100) {
+        while (!LinearUtils.equal(right, LinearUtils.mulMatrixMatrix(L, LinearUtils.transpose(L))) && numCholesky < 10) {
             tau = Math.max(1, 2 * tau);
             right = LinearUtils.sum(h, LinearUtils.I(n, tau));
             L = new Cholesky(right).decompose();
